@@ -1,0 +1,21 @@
+.mhead {
+  @apply flex justify-between
+  overflow-hidden shadow-md bg-white px-20
+  sticky top-0 z-50;
+
+  .mhead-left {
+    @apply flex gap-10;
+
+    .mhd-title {
+      @apply font-bold text-2xl text-blue-400 py-4 cursor-pointer;
+    }
+
+    .mhead-list {
+      @apply flex gap-5;
+    }
+  }
+
+  .mhead-right {
+    @apply flex gap-10;
+  }
+}
