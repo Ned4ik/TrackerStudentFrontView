@@ -5,6 +5,7 @@ const inialState: IUserState = {
   teacher: null,
   loading: false,
   error: "",
+  filter: null,
 };
 
 export const userReducer = (
@@ -26,6 +27,12 @@ export const userReducer = (
         teacher: action.payload,
         loading: false,
         error: "",
+      };
+    }
+    case UserActionTypes.INITFILTER: {
+      return {
+        ...state,
+        filter: action.payload,
       };
     }
     case UserActionTypes.INITUSER_WAITING: {

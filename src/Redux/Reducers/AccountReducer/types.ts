@@ -1,3 +1,5 @@
+import { ILesson } from "../ScheduleReducer/types";
+
 export interface IStudent {
   name: string;
   surname: string;
@@ -11,9 +13,20 @@ export interface ITeacher {
   email: string;
 }
 
+export interface IConcatLessonVisit {
+  lessonDto: ILesson;
+  lessonVisit: boolean;
+}
+
+export interface FilterUser {
+  studentDto: IStudent;
+  filterCourseLessons: Array<IConcatLessonVisit>;
+}
+
 export enum UserActionTypes {
   INITSTUDENT = "INITSTUDENT",
   INITTEACHER = "INITTEACHER",
+  INITFILTER = "INITFILTER",
   INITSTUDENT_CLEAR = "INITSTUDENT_CLEAR",
   INITTEACHER_CLEAR = "INITTEACHER_CLEAR",
 
@@ -24,6 +37,7 @@ export enum UserActionTypes {
 export interface IUserState {
   student: IStudent | null;
   teacher: ITeacher | null;
+  filter: Array<FilterUser> | null;
   loading: boolean;
   error: string;
 }
@@ -58,6 +72,10 @@ export interface InitTeacherAction {
   type: UserActionTypes.INITTEACHER;
   payload: ITeacher | null;
 }
+export interface InitFilterAction {
+  type: UserActionTypes.INITFILTER;
+  payload: Array<FilterUser> | null;
+}
 export interface InitUserWaitAction {
   type: UserActionTypes.INITUSER_WAITING;
   payload: boolean;
@@ -80,4 +98,5 @@ export type UserAction =
   | InitUserWaitAction
   | InitUserErrorAction
   | InitStudentClearAction
-  | InitTeacherClearAction;
+  | InitTeacherClearAction
+  | InitFilterAction;

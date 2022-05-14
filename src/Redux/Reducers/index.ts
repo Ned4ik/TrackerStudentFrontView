@@ -2,6 +2,7 @@ import { combineReducers } from "redux";
 import { userReducer } from "./AccountReducer";
 import { lessonReducer } from "./LessonReducer";
 import { scheduleReducer } from "./ScheduleReducer";
+import { searchReducer } from "./SearchReducer";
 import { universityReducer } from "./UniversityReducer";
 
 export const rootReducer = combineReducers({
@@ -9,6 +10,7 @@ export const rootReducer = combineReducers({
   scheduleReducer: scheduleReducer,
   lessonReducer: lessonReducer,
   universityReducer: universityReducer,
+  searchReducer: searchReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
