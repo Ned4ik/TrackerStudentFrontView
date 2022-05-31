@@ -13,8 +13,8 @@ export const LessonsItem: React.FC<ILessonsItem> = ({
       hover:bg-blue-600 hover:text-white hover:scale-105 hover:border-blue-600"
       onClick={onClick}
     >
-      <h1 className="font-medium text-center text-3xl">{name}</h1>
-      <h1 className="font-medium text-2xl">{moment(time).format("LT")}</h1>
+      <h1 className="font-medium text-center text-1xl">{name}</h1>
+      <h1 className="font-medium text-1xl">{moment(time).format("LT")}</h1>
     </div>
   );
 };

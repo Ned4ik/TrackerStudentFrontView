@@ -39,7 +39,7 @@ export const LessonDetails: React.FC = () => {
           return (
             <StudentRow
               key={Guid.create().toString()}
-              name={entity.studentLessonDto.studentDto.name}
+              name={entity.studentLessonDto.studentDto.name + " " + entity.studentLessonDto.studentDto.surname}
               groupname={entity.groupDto.name}
               checker={entity.studentLessonDto.lessonVisit}
               onCheck={async () => {

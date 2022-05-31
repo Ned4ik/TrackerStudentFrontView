@@ -23,29 +23,21 @@ export const Header: React.FC = () => {
             window.location.reload();
           }}
         >
-          Student Tracker
+          Студент Чекер
         </h1>
         <div className="mhead-list">
           {teacher !== null ? (
-            <><LinkButton
-              className=""
-              text="University Student"
-              onClick={() => {
-                console.log("uns");
-                nav("universitystudents");
-              }}/>
               <LinkButton
                 className=""
-                text="Report"
+                text="Отчет"
                 onClick={() => {
                   console.log("uns");
                   nav("report");
                 }}/>
-              </>
           ) : null}
           <LinkButton
             className=""
-            text="Schedule"
+            text="Расписание"
             onClick={() => {
               nav("schedule");
             }}
@@ -57,7 +49,7 @@ export const Header: React.FC = () => {
         localStorage.getItem("token") === undefined ? (
           <LinkButton
             className=""
-            text="Login"
+            text="Войти"
             onClick={() => {
               nav("login");
             }}
@@ -65,7 +57,7 @@ export const Header: React.FC = () => {
         ) : (
           <LinkButton
             className=""
-            text="Logout"
+            text="Выйти"
             onClick={() => {
               LogoutUser();
               nav("");

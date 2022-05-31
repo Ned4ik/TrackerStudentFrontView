@@ -1,3 +1,4 @@
+import { IGroup } from "../LessonReducer/types";
 import { ILesson } from "../ScheduleReducer/types";
 
 export interface IStudent {
@@ -5,6 +6,7 @@ export interface IStudent {
   surname: string;
   email: string;
   timePass: number;
+  studentCard: string;
 }
 
 export interface ITeacher {

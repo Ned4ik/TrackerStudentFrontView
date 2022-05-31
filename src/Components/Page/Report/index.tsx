@@ -1,8 +1,11 @@
+import { table } from "console";
 import { Guid } from "guid-typescript";
 import React, { useEffect, useRef, useState } from "react";
 import { useActions } from "../../../Hooks/useActions";
 import { useTypedSelector } from "../../../Hooks/useTypedSelector";
 import { FilterUser } from "../../../Redux/Reducers/AccountReducer/types";
+
+
 
 export const Report: React.FC = () => {
   const [pass, setPass] = useState("studentpass");
@@ -16,6 +19,9 @@ export const Report: React.FC = () => {
 
   const [selectedCourse, setSelectedCourse] = useState("");
   const [selectedGroup, setSelectedGroup] = useState("");
+  
+  //Exel
+
 
   const courses = useTypedSelector((state) => state.searchReducer.courses);
   const groups = useTypedSelector((state) => state.searchReducer.groups);
@@ -29,14 +35,14 @@ export const Report: React.FC = () => {
     setPass(e);
     if (e === "warn") {
       let tempArr = filter?.filter(
-        (f) => f.studentDto.timePass >= 30 && f.studentDto.timePass < 60
+        (f) => f.studentDto.timePass >= 36 && f.studentDto.timePass < 108
       );
       if (tempArr !== undefined && tempArr !== null && tempArr.length !== 0) {
         setFilterState(tempArr);
       }
     }
     if (e === "deductions") {
-      let tempArr = filter?.filter((f) => f.studentDto.timePass >= 60);
+      let tempArr = filter?.filter((f) => f.studentDto.timePass >= 108);
       if (tempArr !== undefined && tempArr !== null && tempArr.length !== 0) {
         setFilterState(tempArr);
       }
@@ -46,7 +52,7 @@ export const Report: React.FC = () => {
         setFilterState(filter);
       } else {
         const searched = filter?.filter((f) =>
-          f.studentDto.email.includes(search)
+          f.studentDto.name.includes(search)
         );
         if (searched !== null && searched !== undefined) {
           setFilterState(searched);
@@ -54,7 +60,7 @@ export const Report: React.FC = () => {
       }
     }
   };
-
+ 
   const onLessonType = (e: string) => {
     setLessonType(e);
     if (e === "bygroup") {
@@ -69,9 +75,13 @@ export const Report: React.FC = () => {
       setFilterState(filter);
       return;
     }
-    const searched = filter?.filter((f) => f.studentDto.email.includes(value));
+    const searched = filter?.filter((f) => f.studentDto.name.toLowerCase().includes(value.toLowerCase()));
     if (searched !== null && searched !== undefined) {
-      setFilterState(searched);
+      if (searched.length !== 0)
+      {
+
+        setFilterState(searched);
+      }
     }
   };
 
@@ -102,6 +112,8 @@ export const Report: React.FC = () => {
     }
   }, [selectedCourse]);
 
+  //Exel
+
   return (
     <div className="w-screen overflow-y-hidden py-5 px-10 flex flex-col justify-center items-center gap-10">
       <div className="flex flex-col gap-2">
@@ -112,9 +124,9 @@ export const Report: React.FC = () => {
               onPass(e.target.value);
             }}
           >
-            <option value="studentpass">Student Pass</option>
-            <option value="warn">Warn</option>
-            <option value="deductions">Deductions</option>
+            <option value="studentpass">Посещаемость студента</option>
+            <option value="warn">Выговор</option>
+            <option value="deductions">Отчисление</option>
           </select>
           <select
             disabled={pass === "studentpass" ? false : true}
@@ -123,8 +135,8 @@ export const Report: React.FC = () => {
               onLessonType(e.target.value);
             }}
           >
-            <option value="bycourse">By course</option>
-            <option value="bygroup">By group</option>
+            <option value="bycourse">По курсу</option>
+            <option value="bygroup">По группе</option>
           </select>
 
           {lessonType === "bycourse" ? (
@@ -164,28 +176,20 @@ export const Report: React.FC = () => {
         <input
           disabled={pass === "studentpass" ? false : true}
           className="bg-transparent py-2 px-4 border rounded-md"
-          placeholder="Enter student email"
+          placeholder="Введите почту студента"
           defaultValue={search}
           onChange={(e: any) => {
             onSearch(e.target.value);
           }}
         />
-
-        {/* <button
-          className="py-2 px-4 bg-gray-200 rounded-md hover:bg-gray-300"
-          onClick={onDownload}
-        >
-          {" "}
-          Export excel{" "}
-        </button> */}
       </div>
       {lessonType === "bycourse" ? (
         <div>
           <table className="table-fixed w-full bg-gray-200" ref={tableRef}>
             <thead className="border-b border-b-black">
               <tr>
-                <th className="p-3">Student</th>
-                {filterState !== null
+                <th className="p-3">Студент</th>
+                {filterState !== null && filterState !== undefined
                   ? filterState[0].filterCourseLessons.map((item) => {
                       return (
                         <th key={item.lessonDto.id} className="p-3">
@@ -194,7 +198,7 @@ export const Report: React.FC = () => {
                       );
                     })
                   : null}
-                <th className="p-3">TP</th>
+                <th className="p-3">Академ часы</th>
               </tr>
             </thead>
             <tbody>
@@ -204,12 +208,12 @@ export const Report: React.FC = () => {
                     key={item.studentDto.email}
                     className="border-b border-b-black"
                   >
-                    <td className="py-3">{item.studentDto.email}</td>
+                    <td className="py-3">{item.studentDto.name + " " +item.studentDto.surname}</td>
                     {item.filterCourseLessons.map((fs) => {
                       return (
                         <td key={Guid.create().toString()} className="py-3">
                           <div className="flex justify-center">
-                            {fs.lessonVisit ? "Visit" : "Dont Visit"}
+                            {fs.lessonVisit ? "0" : "2"}
                           </div>
                         </td>
                       );
@@ -232,7 +236,7 @@ export const Report: React.FC = () => {
           <table className="table-fixed w-full bg-gray-200" ref={tableRef}>
             <thead className="border-b border-b-black">
               <tr>
-                <th className="p-3">Student</th>
+                <th className="p-3">Студент</th>
                 {lessons?.map((item) => {
                   return (
                     <th key={item.id} className="p-3">
@@ -240,7 +244,7 @@ export const Report: React.FC = () => {
                     </th>
                   );
                 })}
-                <th className="p-3">TP</th>
+                <th className="p-3">Академ часы</th>
               </tr>
             </thead>
             <tbody>
@@ -250,12 +254,12 @@ export const Report: React.FC = () => {
                     key={item.studentDto.email}
                     className="border-b border-b-black"
                   >
-                    <td className="py-3">{item.studentDto.email}</td>
+                    <td className="py-3">{item.studentDto.name + " " + item.studentDto.surname}</td>
                     {item.filterCourseLessons.map((fs) => {
                       return (
                         <td key={Guid.create().toString()} className="py-3">
                           <div className="flex justify-center">
-                            {fs.lessonVisit ? "Visit" : "Dont Visit"}
+                            {fs.lessonVisit ? "0" : "2"}
                           </div>
                         </td>
                       );

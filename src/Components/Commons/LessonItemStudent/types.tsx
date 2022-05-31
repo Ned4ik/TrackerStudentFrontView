@@ -1,7 +1,7 @@
 export interface ILessonsItemStudent {
     name: string;
     time: any;
-    IsCheck: boolean;
+    IsCheck: boolean | any;
     onClick: () => void;
   }
   

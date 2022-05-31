@@ -1,3 +1,4 @@
+import { request } from "http";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useActions } from "../../../Hooks/useActions";
@@ -19,7 +20,7 @@ export const StudentVerification: React.FC = () =>{
     return(
 
         <div className="overflow-hidden w-screen h-screen flex justify-center items-center">
-           <h1 className="font-bold text-2xl">Verification is true</h1> 
+           <h1 className="font-bold text-2xl">Вы прошли авторизацию...</h1> 
         </div>
     )
 }

@@ -1,0 +1,17 @@
+.Ulbtn {
+    @apply outline-0 font-medium text-yellow-500 py-2 px-3 relative border-0 outline-0;
+    &::after {
+      @apply absolute bottom-0 left-0 bg-blue-500;
+      content: "";
+      width: 0%;
+      height: 0.2rem;
+      transition: 0.2s;
+    }
+  
+    &:hover {
+      &::after {
+        @apply w-full;
+      }
+    }
+  }
+  

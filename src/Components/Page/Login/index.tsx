@@ -26,14 +26,12 @@ export const Login: React.FC = () => {
   }, [localStorage.getItem("token")]);
 
   const onLogin = async () => {
+    const request: ILoginForm = {
+      email: email,
+      password: password,
+    };
     try {
-      const request: ILoginForm = {
-        email: email,
-        password: password,
-      };
       if (isStudent) {
-        await loginStudent(request);
-        localStorage.setItem("descriminator", "student");
       } else {
         await loginTeacher(request);
         localStorage.setItem("descriminator", "teacher");
@@ -41,7 +39,8 @@ export const Login: React.FC = () => {
 
       nav("");
     } catch (error) {
-      console.error(error);
+      await loginStudent(request);
+        localStorage.setItem("descriminator", "student");
     }
   };
 
@@ -71,19 +70,11 @@ export const Login: React.FC = () => {
               setPassword(e.target.value);
             }}
           />
-          <div className="flex justify-between">
-            <input
-              type={"checkbox"}
-              defaultChecked={isStudent}
-              onChange={() => {
-                setStudent(!isStudent);
-              }}
-            />
-            <h1 className="font-medium">You are student?</h1>
-          </div>
           <DefButton text="Login" onClick={onLogin} />
         </div>
       </div>
     </div>
   );
+
+
 };

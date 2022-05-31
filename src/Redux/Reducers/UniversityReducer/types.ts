@@ -11,6 +11,7 @@ export enum UniversityActionTypes {
 export interface IUniversityStudent {
   id: string;
   visit: boolean;
+  visitDate: Date;
   studentDto: IStudent;
 }
 

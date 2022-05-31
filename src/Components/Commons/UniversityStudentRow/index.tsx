@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-export interface IStudentRow {
+import moment from "moment";
+export interface IUniversityStudentRow {
   name: string;
-  groupname: any;
+  surname: string;
+  studentCard: any;
   checker: boolean;
+  visitDate: Date;
   onCheck: () => void;
 }
 
-export const StudentRow: React.FC<IStudentRow> = ({
+export const UniversityStudentRow: React.FC<IUniversityStudentRow> = ({
   name,
-  groupname,
+  studentCard,
+  surname,
   checker,
+  visitDate,
   onCheck,
 }) => {
   const [isCheck, setCheck] = useState(checker);
@@ -21,19 +26,20 @@ export const StudentRow: React.FC<IStudentRow> = ({
 
   return (
     <div
-      className={`w-full grid grid-cols-7 justify-between gap-20 py-4 px-8 rounded-md shadow-md ${
+      className={`w-full grid grid-cols-11 justify-between gap-20 py-4 px-8 rounded-md shadow-md ${
 
         isCheck? "bg-lime-500 text-black" : "bg-red-500 text-white"
 
       }`}
     >
-      <h1 className="font-medium text-xl col-span-2">{name}</h1>
-      <h1 className="font-medium text-xl col-span-2">{groupname}</h1>
-      <h1 className={`font-medium text-xl col-span-2`}>
+      <h1 className="font-medium text-md col-span-3">{surname + " " + name}</h1>
+      <h1 className="font-medium text-md col-span-2">{studentCard}</h1>
+      <h1 className={`font-medium text-md col-span-2`}>
       {
-         isCheck ? "Посетил" : "Не посетил"
+         isCheck ? "Присутствует" : "Отсутствует"
       }
       </h1>
+      <h1 className="font-medium text-lg col-span-3">{moment(visitDate).format("LLL")}</h1>
       <div className="flex justify-center items-center">
         <input
           defaultChecked={isCheck}
